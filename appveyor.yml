@@ -1,0 +1,16 @@
+environment:
+  nodejs_version: "8"
+  DB_TYPE: "mysql"
+  DB_LOGGING: false
+
+install:
+  - ps: Install-Product node $env:nodejs_version
+  - yarn install
+
+build_script:
+  - npm start build
+
+test_script:
+  - npm start test
+  - npm start test.integration
+  - npm start test.e2e

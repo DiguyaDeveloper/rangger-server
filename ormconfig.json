@@ -1,0 +1,20 @@
+{
+    "type": "mysql",
+    "host": "127.0.0.1",
+    "username": "root",
+    "password": "password",
+    "database": "type_orm3",
+    "synchronize": false,
+    "entities": [
+        "src/api/models/**/*.model.ts"
+    ],
+    "migrations": [
+        "src/database/migrations/*.ts"
+    ],
+    "cli": {
+        "migrationsDir": "src/migrations",
+        "entitiesDir": "src/app/models/**/*.model.ts",
+        "subscribersDir": "src/subscribers"
+    },
+    "logging": ["query", "error"]
+}
