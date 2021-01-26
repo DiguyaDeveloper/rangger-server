@@ -1,7 +1,7 @@
 import { Response } from 'express';
 import multer from 'multer';
 import {
-    Body, Delete, JsonController, NotFoundError, Param, Post, Put, UploadedFile
+    Body, Delete, Get, JsonController, NotFoundError, Param, Post, Put, UploadedFile
 } from 'routing-controllers';
 
 import { User, UserStatus } from '../models/user-models/User.model';
@@ -29,7 +29,7 @@ const FILE_UPLOAD_OPTIONS = {
       const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
       const mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);
       const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
-      cb(null, `${req.body.username}-${da}-${mo}-${ye}${ext}`.toLowerCase());
+      cb(null, `${req.body.document}-${da}-${mo}-${ye}${ext}`.toLowerCase());
     },
   }),
   fileFilter: imageFilter
@@ -72,6 +72,10 @@ export class UserController {
     return new UserCreateResponse(newUser);
   }
 
+  /**
+   * Api para editar usuário
+   * @param usuario
+   */
   @Put('/verificacao')
   public async update_statusAccount_token(@Body() usuario: UsuarioValidateTokenRequest){
 
@@ -124,6 +128,11 @@ export class UserController {
     return this.userService.delete(id);
   }
 
+  @Get('/listar')
+  public get(): Promise<User[]> {
+    return this.userService.find();
+  }
+
   unlinkFile(file: string) {
     const fs = require("fs")
     fs.unlinkSync(file);
@@ -147,47 +156,32 @@ export class UserController {
    *  CreateUser:
    *    type: object
    *    properties:
-   *      fullname:
+   *      name:
    *        type: string
    *        example: lorem
    *      email:
    *        type: string
    *        example: lorem@ipsun.com
-   *      username:
+   *      lastname:
    *        type: string
    *        example: lorem
+   *      document:
+   *        type: string
+   *        example: '10553173928'
    *      password:
    *        type: string
    *        example: lorem
-   *      estado:
-   *        type: string
-   *        example: PR
-   *      pais:
-   *        type: string
-   *        example: lorem
-   *      help:
-   *        type: boolean
-   *        example: false
    *      termsAndConditions:
-   *        type: boolean
-   *        example: false
-   *      picture:
+   *        type: string
+   *        example: '1'
+   *      file:
    *        type: string
    *        example: local
-   *      roleId:
-   *        type: number
-   *        example: 1
-   *      status:
-   *        type: new
-   *        example: 1
    * 		required:
-   *      - fullname
+   *      - name
    *      - email
-   *      - username
+   *      - lastname
    *      - password
-   *      - estado
-   *      - pais
-   *      - help
    *      - termsAndConditions
    *      - picture
    *      - roleId
@@ -239,7 +233,7 @@ export class UserController {
 
   /**
    * @swagger
-   * /users:
+   * /rangger/usuarios/listar:
    *   get:
    *     security:
    *       - bearerAuth: []
@@ -266,7 +260,7 @@ export class UserController {
 
   /**
   * @swagger
-  * /shawime/usuarios:
+  * /rangger/usuarios:
   *   delete:
   *     tags:
   *     - users
@@ -302,7 +296,7 @@ export class UserController {
 
   /**
 * @swagger
-* /shawime/usuarios:
+* /rangger/usuarios:
 *   put:
 *     tags:
 *     - users
@@ -341,7 +335,7 @@ export class UserController {
 
   /**
    * @swagger
-   * /shawime/usuarios:
+   * /rangger/usuarios:
    *   post:
    *     tags:
    *     - users

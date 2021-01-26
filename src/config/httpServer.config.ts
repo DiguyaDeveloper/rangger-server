@@ -15,6 +15,7 @@ export async function start() {
     logger.info('Starting http server');
     useContainer(Container);
     const app = createExpressServer({
+      cors: false,
       routePrefix: "/rangger",
       controllers: [__dirname + '/../api/controllers/*.controller.ts'],
       middlewares: [__dirname + '/../api/middlewares/*.Middleware.ts'],

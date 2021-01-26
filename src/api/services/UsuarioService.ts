@@ -119,7 +119,8 @@ export class UsuarioService {
         reject( new CustomError(402, 'Aceitar os termos e condições é obrigatório', { id: EnumError.TERMO_CONDICAO }));
       }
 
-      if(usuario.document && cpf.isValid(usuario.document)) {
+      console.log(usuario.document)
+      if(usuario.document && !cpf.isValid(usuario.document)) {
         this.unlinkFile(file.path);
         reject( new CustomError(402, 'Documento (CPF) informado não é válido', { id: EnumError.CPF_INVALIDO }));
       }
@@ -150,8 +151,8 @@ export class UsuarioService {
 
         try {
           Mail.to = user.email;
-          Mail.subject =  "Shawime: Token account verification";
-          Mail.message = 'Shawime: Token account verification';
+          Mail.subject =  "Ranger: Token account verification";
+          Mail.message = 'Rangger: Token account verification';
           Mail.template = './submit_account_code';
           Mail.context = { code: user.confirmation_code };
 

@@ -1,9 +1,11 @@
 import 'reflect-metadata';
+
 import { install as installSourceMapSupport } from 'source-map-support';
-import { DATA_DIR, NODE_ENV } from './config/env.config';
-import { getLogger } from './config/logger.config';
+
 import { connect as connectDb } from './config/database.config';
+import { DATA_DIR, NODE_ENV } from './config/env.config';
 import { start as startHttpServer } from './config/httpServer.config';
+import { getLogger } from './config/logger.config';
 
 const logger = getLogger(__filename);
 
